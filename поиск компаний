@@ -7,7 +7,7 @@ import random
 import ssl
 
 
-URL = 'http://www.rusprofile.ru/codes/105130/'
+URL = 'АНТИПАРСЕР'
 
 HEADERS = {'user-agent': UserAgent(verify_ssl=False).chrome}
 FILE = 'cheeze.csv'
