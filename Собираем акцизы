@@ -7,7 +7,7 @@ import random
 import requests
 import pandas as pd
 
-homepage = 'https://zachestnyibiznes.ru'
+homepage = 'АНТИПАРСИНГ'
 headers = {'User-Agent': UserAgent(verify_ssl=False).chrome}
 
 
@@ -27,7 +27,7 @@ def undone():
 # Отдает 'search_check' , 'status' , 'link'
 def search(inn):
     global homepage, headers
-    search_url = 'https://zachestnyibiznes.ru/search?query={0}'.format(inn)
+    search_url = 'https://АНТИПАРСИНГsearch?query={0}'.format(inn)
     searchpage = BeautifulSoup(
         requests.get(
             search_url,
@@ -79,7 +79,7 @@ def taxes(text):
     taxes = text
     taxes = taxes.replace('\n', '')
     taxes = taxes.replace('- ', '')
-    taxes = taxes.split('По данным портала ЗАЧЕСТНЫЙБИЗНЕС')
+    taxes = taxes.split('АНТИПАРСИНГ')
 
     search1 = 'акцизы, всего:'
     search2 = 'налог на добавленную стоимость:'
