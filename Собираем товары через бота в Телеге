@@ -8,7 +8,7 @@ import random
 phone_global = 0
 
 # Передаю питону токен телеграма
-bot = telebot.TeleBot("1155031589:AAE4TeZKUfBy7KHjCuZq8SAPUYgGYNKj-Pg")
+bot = telebot.TeleBot("МОЙ ТОКЕН")
 state = dict()
 
 
@@ -30,7 +30,7 @@ def handle_command(message):
             else:
                 pass
 
-            URL = 'https://www.wildberries.ru/catalog/0/search.aspx?search={0}'.format(inpt)
+            URL = 'https://www.АНТИПАРСИНГ{0}'.format(inpt)
             print(URL)
 
 
@@ -65,19 +65,6 @@ def handle_command(message):
                 print(len(pagination))
                 return len(pagination) + 1
 
-            #def get_pages_count(html):
-             #   soup = BeautifulSoup(html, 'html.parser')
-              #  pagination = soup.find('ul', class_="js-pagination-list").get('data-pages')
-               # pagination2 = soup.find('div', class_="b-pagination-wrapper js-b-pagination-wrapper")
-                #if pagination is None:
-                 #   if pagination2 is None:
-                  #      pagination = 0
-                   # else:
-                    #    pagination = pagination2
-               # else:
-                #    pass
-                #print(pagination)
-                #return int(pagination)
 
             def get_content(html):
                 soup = BeautifulSoup(html, 'html.parser')
