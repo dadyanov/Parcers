@@ -10,7 +10,7 @@ import os
 
 url = 'https://www.wildberries.ru'
 
-
+# Создаем файл для записи
 def csv_create(file_name):
     with open('{0}.csv'.format(file_name), 'w+') as file:
         writer = csv.writer(file, delimiter='|')
@@ -38,12 +38,12 @@ def csv_create(file_name):
     file.close()
     return '{0}.csv'.format(file_name)
 
-
+# Запускаем хром
 def driver():
     driver = webdriver.Chrome()
     return driver
 
-
+# Вбиваем в поиск то, что нам надо
 def search(text, driver, url):
     driver.get(url)
     xpath = "/html/body[@class='ru']/div[@class='header-v1  j-header custom-bg header-with-burger']/div[@class='header-bg j-parallax-back-layer']/div[@class='header-wrapper lang-ru']/div[@class='header-content']/div[@class='wildSrch enable-img']/input[@id='tbSrch']"
@@ -52,7 +52,7 @@ def search(text, driver, url):
     driver.execute_script('window.scrollTo(0, document.body.scrollHeight)')
     return driver
 
-
+# Рекурсивно парсим страницу
 def next_page(driver, file):
     next_page_button = "/html/body[@class='ru']/div[@id='body-layout']/div[@class='left-bg']/div[@class='trunkOld']/div[@id='catalog']/div[@id='catalog-content']/div[@class='pager-bottom']/div[@class='pager i-pager']/div[@class='pageToInsert']/a[@class='pagination-next']"
     goods = save_searchpage(driver.page_source)
@@ -88,7 +88,7 @@ def next_page(driver, file):
         driver.save_screenshot('Скриншот.png')
         print("Я закончил")
 
-
+# Сохраняем все, что можем сохранить. Чего не можем — "No data"
 def save_file(item, path):
     # Пишем построчно каждый полученный результат сразу
     with open(path, 'a', newline='', encoding='utf-8') as file:
@@ -118,7 +118,7 @@ def save_file(item, path):
                                                                            item['brand'],
                                                                            item['promoPrice']))
 
-
+# Сохраняем данные карточек товара с поисковой выдачи
 def save_searchpage(html):
     soup = BeautifulSoup(html, 'html.parser')
     items = soup.find_all('div', class_="dtList-inner")
@@ -147,7 +147,7 @@ def save_searchpage(html):
             pass
     return goods
 
-
+# Сохраняем данные товара
 def save_good(html, good):
     soup = BeautifulSoup(html, 'html.parser')
     ourscript = html
@@ -260,14 +260,14 @@ def save_good(html, good):
     print(res['brand'], res['name'])
     return res
 
-
+# Для внутренней аналитики
 def merge(df):
     asana = pd.read_excel('asanaPrice.xlsx')
     new = pd.merge(df, asana, on='type')
     new['Our-Market'] = new['retailPrice'] - new['promoPrice']
     return new
 
-
+# Графики распределения
 def calcCategory(df, name, graph=1):
     writer = name
         #pd.ExcelWriter(name, engine='xlsxwriter')
@@ -326,20 +326,20 @@ def calcCategory(df, name, graph=1):
         pass
     writer.save()
 
-
+# Доли рынка
 def shares(df):
     df = df[['brand', 'name', 'ordersCount']].sort_values('ordersCount', ascending=False)
     df['share'] = df['ordersCount'] / df.sum()['ordersCount']
 
     return df
 
-
+# Таблица цен
 def prices(df):
     df = df[['brand', 'name', 'price']]
     print(df.to_string)
     return df.sort_values('price', ascending=True)
 
-
+# Базовый сценарий использования
 def main(search_request, file_name, minus):
     global url
     csv_create(file_name)  # Создаем файл csv
